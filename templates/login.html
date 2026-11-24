@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso NOC • Monitoramento Ambiental Data Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-body">
+    <div class="login-grid">
+        <section class="login-telemetry-panel">
+            <div class="noc-badge">
+                <span class="pulse-dot online"></span>
+                <span>SENAI 134 • NODE DC-01</span>
+            </div>
+
+            <h1>Telemetria &amp; Controle Ambiental de Data Center</h1>
+            <p class="login-lead">
+                Monitoramento contínuo de integridade térmica, umidade relativa, qualidade do ar e particulados em racks críticos sob diretrizes ASHRAE TC 9.9.
+            </p>
+
+            <div class="spec-list">
+                <div class="spec-item">
+                    <span class="spec-key">LIMITE TÉRMICO CRÍTICO</span>
+                    <span class="spec-val mono">&gt; 27.0 °C (Alerta Imediato)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-key">FAIXA SEGURA UMIDADE</span>
+                    <span class="spec-val mono">40.0% — 60.0% RH (Anti-ESD)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-key">FECHAMENTO DIÁRIO</span>
+                    <span class="spec-val mono">21:30 BRT • Resend API</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-form-panel">
+            <div class="auth-card">
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab {{ 'active' if aba != 'cadastro' else '' }}" onclick="trocarAba('login')">
+                        Entrar no NOC
+                    </button>
+                    <button type="button" class="auth-tab {{ 'active' if aba == 'cadastro' else '' }}" onclick="trocarAba('cadastro')">
+                        Novo Operador
+                    </button>
+                </div>
+
+                {% if erro %}
+                <div class="auth-alert">{{ erro }}</div>
+                {% endif %}
+
+                <form id="form-login" action="{{ url_for('login') }}" method="POST" class="auth-form {{ 'hidden' if aba == 'cadastro' else '' }}">
+                    <div class="field-group">
+                        <label for="login-email">E-mail Corporativo</label>
+                        <input type="email" id="login-email" name="email" placeholder="operador@datacenter.com" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="login-senha">Senha de Acesso</label>
+                        <input type="password" id="login-senha" name="senha" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Acessar Console de Telemetria</button>
+                </form>
+
+                <form id="form-cadastro" action="{{ url_for('cadastro') }}" method="POST" class="auth-form {{ 'hidden' if aba != 'cadastro' else '' }}">
+                    <div class="field-group">
+                        <label for="cad-nome">Nome do Operador / Gestor</label>
+                        <input type="text" id="cad-nome" name="nome" placeholder="Ex: João Victor" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="cad-email">E-mail</label>
+                        <input type="email" id="cad-email" name="email" placeholder="operador@datacenter.com" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="cad-senha">Criar Senha</label>
+                        <input type="password" id="cad-senha" name="senha" placeholder="Mínimo 4 caracteres" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Cadastrar e Entrar</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function trocarAba(aba) {
+            const formLogin = document.getElementById('form-login');
+            const formCadastro = document.getElementById('form-cadastro');
+            const tabs = document.querySelectorAll('.auth-tab');
+            if (aba === 'login') {
+                formLogin.classList.remove('hidden');
+                formCadastro.classList.add('hidden');
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+            } else {
+                formLogin.classList.add('hidden');
+                formCadastro.classList.remove('hidden');
+                tabs[0].classList.remove('active');
+                tabs[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
