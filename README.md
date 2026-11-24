@@ -32,7 +32,18 @@ Gestores de TI e Facilities responsáveis por salas de servidores, CPD e racks d
 * **Concentração de CO₂ (`CO2`):** Indicador de renovação de ar, presença humana na sala restrita e detecção complementar de combustão.
 * **Pressão Atmosférica (`pressure`) e Altitude (`altitude`):** Controle de pressurização positiva da sala (evita entrada de poeira externa) e calibração de fluxo de ar/dissipação térmica.
 
+# Arquivo .env
+````
+SECRET_KEY=chave_secreta_datacenter_senai134
+DATABASE_URI=mysql+pymysql://root:senai%40134@localhost:3306/monitoramento_ambiental
 
+MQTT_BROKER=test.mosquitto.org
+MQTT_PORT=1883
+MQTT_TOPIC=projeto_integrado/SENAI134/Cienciadedados/grupoX
+
+RESEND_API_KEY=re_5dD6MTb9_JwBnyF1roFMWm7V5vQqRTU4j
+EMAIL_DESTINO=joao.zuccaratto@aluno.senai.br
+````
 
 
 # Checklist Entregaveis
